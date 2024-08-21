@@ -11,7 +11,9 @@
 	              <h6 class="m-0 font-weight-bold text-primary"><?= $title;  ?></h6>
 	            </div>
 				<div class="card-body">
-					<textarea rows="15" class="form-control" readonly=""></textarea>
+					<textarea rows="15" class="form-control" readonly="">
+						
+					</textarea>
 
 				</div>
 			</div>

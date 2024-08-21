@@ -157,6 +157,7 @@ class Cctv extends CI_Controller
 			$result[] = $this->createScript($row['id_group']);
 		}
 
+		$data['script'] = $result;
 		echo json_encode($result);
 
 		$this->load->view('templates/header', $data);
@@ -178,7 +179,9 @@ class Cctv extends CI_Controller
 
 		$res = array();
 		foreach($dt_allcctv as $row) {
-			$res[] = $brs_1.'"'.$row['url_rtsp'].'"'.$brs_2.$dt_setting['url_xampp'].$row['url_directory'];
+			$url_ = str_replace("/", "\\", $row['url_directory']);
+
+			$res[] = $brs_1.'"'.$row['url_rtsp'].'"'.$brs_2.$dt_setting['url_xampp'].$url_;
 		}
 		return $res;
 	}
