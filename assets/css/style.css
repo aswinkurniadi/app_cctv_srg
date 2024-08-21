@@ -1,0 +1,47 @@
+#namaAkunJurnal {
+	overflow-y: hidden;
+}
+
+.modal-journal {
+	width: 100%;
+}
+
+.className {
+   -webkit-appearance: menulist-button;
+   height: 50px;
+}
+
+.table-journal {
+	width: 800px;
+}
+
+.table-role {
+  width: 400px;
+}
+
+.table-user-management {
+  width: 1000px;
+}
+
+.table-menu {
+  width: 400px;
+}
+
+.table-dataAkun {
+  width: 1400px;
+}
+
+/*Versi Desktop*/
+@media (min-width: 768px) {
+    .container {
+        margin-top: 20px;
+    }
+
+    .table-journal, .table-role, .table-user-management, .table-menu, .table-dataAkun {
+    	width: 100%;
+    }
+
+    .description img {
+      height: 40px;
+    }
+}
