@@ -11,8 +11,17 @@
 	              <h6 class="m-0 font-weight-bold text-primary"><?= $title;  ?></h6>
 	            </div>
 				<div class="card-body">
-					<textarea rows="15" class="form-control" readonly="">
-						
+					<textarea rows="15" class="form-control" readonly=""><?php 
+						foreach($script as $row) {
+							echo "@rem ".$row['nm_group']." \n";
+							foreach($row['res'] as $rowss) {
+								echo $rowss."\n";
+								echo "\n";
+							}
+
+							echo "\n";
+						}
+						?>
 					</textarea>
 
 				</div>

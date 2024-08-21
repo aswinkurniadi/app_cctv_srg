@@ -53,7 +53,9 @@
 					<div class="row">
 					<?php 
 						$i = 1;
+						if(!empty($dt_allCCTVLive)) {
 						foreach($dt_allCCTVLive as $row) {
+							if(!empty($row['url_directory'])) {
 						?>
 						<style type="text/css">
 							.col-sm-3 video {
@@ -82,8 +84,12 @@
 						</div>
 
 					<?php 
+							} else {
+								echo "Tidak ada data CCTV";
+							}
 					$i++;
 					} 
+					}
 					?>
 					</div>
 

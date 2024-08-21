@@ -154,11 +154,13 @@ class Cctv extends CI_Controller
 
 		$result = array();
 		foreach($dt_group as $row) {
-			$result[] = $this->createScript($row['id_group']);
+			$result[] = array(
+					'nm_group' => $row['nm'],
+					'res' => $this->createScript($row['id_group']),
+				);
 		}
 
 		$data['script'] = $result;
-		echo json_encode($result);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('templates/sidebar', $data);
