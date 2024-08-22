@@ -121,7 +121,7 @@
 		            var currentHls = 'videoC_' + i;
 
 		            var contentString = `
-		                <div style="width: 100%; height: 200px; border: 5px solid #4e73df;">
+		                <div style="width: 100%; height: 100%; border: 5px solid #4e73df;">
 		                    <video id="${videoId}" autoplay="true" controls="controls" muted style="width: 100%; height: 100%;" type='application/x-mpegURL'></video>
 		                </div>
 		            `;
@@ -235,6 +235,39 @@
 	    				line-height: 90px;
 	    				color: white;
 	    			}
+
+					#search-icon {
+					    position: absolute;
+					    top: 8vh; /* Jarak dari atas */
+					    left: 20px; /* Jarak dari kiri */
+					    background-color: #4e73df; /* Warna biru */
+					    color: white; /* Warna ikon */
+					    border-radius: 50%; /* Membuat lingkaran */
+					    width: 60px; /* Lebar */
+					    height: 60px; /* Tinggi */
+					    display: none;
+					    align-items: center;
+					    justify-content: center;
+					    cursor: pointer;
+					    z-index: 1000; /* Pastikan di atas elemen lain */
+					    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+					}
+
+	    			.close-btn {
+					    position: absolute;
+					    top: 10px; /* Adjust as needed */
+					    right: 10px; /* Adjust as needed */
+					    background: none;
+					    border: none;
+					    font-size: 2rem;
+					    color: #000; /* Adjust color as needed */
+					    cursor: pointer;
+					    z-index: 10; /* Ensure it's on top of other content */
+					}
+
+					.close-btn:hover {
+					    color: #f00; /* Optional: change color on hover */
+					}
 	    		}
 
 	    		/*<!-- tampilan hp -->*/
@@ -282,6 +315,39 @@
 	    				line-height: 13vh;
 	    				color: white;
 	    			}
+
+					#search-icon {
+					    position: absolute;
+					    top: 8vh; /* Jarak dari atas */
+					    left: 20px; /* Jarak dari kiri */
+					    background-color: #4e73df; /* Warna biru */
+					    color: white; /* Warna ikon */
+					    border-radius: 50%; /* Membuat lingkaran */
+					    width: 60px; /* Lebar */
+					    height: 60px; /* Tinggi */
+					    display: none;
+					    align-items: center;
+					    justify-content: center;
+					    cursor: pointer;
+					    z-index: 1000; /* Pastikan di atas elemen lain */
+					    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+					}
+
+	    			.close-btn {
+					    position: absolute;
+					    top: 10px; /* Adjust as needed */
+					    right: 10px; /* Adjust as needed */
+					    background: none;
+					    border: none;
+					    font-size: 2rem;
+					    color: #000; /* Adjust color as needed */
+					    cursor: pointer;
+					    z-index: 10; /* Ensure it's on top of other content */
+					}
+
+					.close-btn:hover {
+					    color: #f00; /* Optional: change color on hover */
+					}
 	    		}
 
 
@@ -310,13 +376,54 @@
 	    				color: white;
 	    			}
 
+
+					#search-icon {
+					    position: absolute;
+					    top: 8vh; /* Jarak dari atas */
+					    left: 20px; /* Jarak dari kiri */
+					    background-color: #4e73df; /* Warna biru */
+					    color: white; /* Warna ikon */
+					    border-radius: 50%; /* Membuat lingkaran */
+					    width: 60px; /* Lebar */
+					    height: 60px; /* Tinggi */
+					    display: none;
+					    align-items: center;
+					    justify-content: center;
+					    cursor: pointer;
+					    z-index: 1000; /* Pastikan di atas elemen lain */
+					    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+					}
+
+	    			.close-btn {
+					    position: absolute;
+					    top: 10px; /* Adjust as needed */
+					    right: 10px; /* Adjust as needed */
+					    background: none;
+					    border: none;
+					    font-size: 2rem;
+					    color: #000; /* Adjust color as needed */
+					    cursor: pointer;
+					    z-index: 10; /* Ensure it's on top of other content */
+					}
+
+					.close-btn:hover {
+					    color: #f00; /* Optional: change color on hover */
+					}
+
 	    		}
 
 
 	    	</style>
 
+	    	<!-- Search Icon -->
+			<div id="search-icon">
+			    <i class="fas fa-search" style="font-size: 2rem; line-height: 60px; margin-left: 15px;"></i>
+			</div>
+
+
 	        <!-- Search Box and List Container -->
 			<div class="pencarian">
+				<button class="close-btn" aria-label="Close">&times;</button>
 
 			    <div style="display: flex; flex-direction: column; align-items: left;">
 			        <!-- Logo -->
@@ -431,6 +538,24 @@
 	<!-- Skrip JavaScript -->
 	<script>
 
+		document.addEventListener('DOMContentLoaded', function() {
+		    var closeBtn = document.querySelector('.close-btn');
+		    var pencarianDiv = document.querySelector('.pencarian');
+		    var searchIcon = document.getElementById('search-icon');
+
+		    // Show the search box and hide the search icon
+		    searchIcon.addEventListener('click', function() {
+		        pencarianDiv.style.display = 'block';
+		        searchIcon.style.display = 'none'; // Hide the search icon
+		    });
+
+		    // Hide the search box and show the search icon
+		    closeBtn.addEventListener('click', function() {
+		        pencarianDiv.style.display = 'none';
+		        searchIcon.style.display = 'block'; // Show the search icon
+		    });
+		});
+
 		document.getElementById('search-box').addEventListener('input', function() {
 		    const searchBox = document.getElementById('search-box');
             const filter = searchBox.value.toLowerCase();
@@ -474,7 +599,7 @@
 
 		        // Info window content with video player
 		        var contentString = `
-	                <div style="width: 100%; height: 200px; border: 5px solid #4e73df;">
+	                <div style="width: 100%; height: 100%;  border: 5px solid #4e73df;">
 		                <video id="video" autoplay="true" controls="controls" muted style="width: 100%; height: 100%;" type='application/x-mpegURL'></video>
 		            </div>
 		        `;
