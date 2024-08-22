@@ -25,7 +25,34 @@
         body {
         	overflow: hidden;
         }
-    </style>
+
+	    /* Gaya dasar untuk item daftar */
+	    .list-group-item {
+	        transition: background-color 0.3s, color 0.3s; /* Transisi halus untuk perubahan warna */
+            cursor: pointer;
+	    }
+
+	    /* Gaya saat kursor berada di atas item daftar */
+	    .list-group-item:hover {
+	        background-color: #4e73df; /* Warna latar belakang biru (primary) */
+	        color: #ffffff; /* Warna teks putih */
+	    }
+
+	    /* Gaya untuk link di dalam item daftar agar tetap terlihat seperti item daftar */
+	    .list-group-item a {
+	        color: inherit; /* Menggunakan warna teks item daftar */
+	        text-decoration: none; /* Menghapus garis bawah dari link */
+	    }
+
+        .no-results {
+            display: none; /* Sembunyikan pesan tidak ditemukan secara default */
+            color: red;
+            font-size: 1em;
+            text-align: center;
+            padding: 10px;
+        }
+
+	</style>
 
 	<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k&callback=getLocation" async defer></script>
@@ -65,7 +92,7 @@
 	    var mapOptions = {
 	      zoom : 16,
 	      center : center,
-	      mapTypeId: google.maps.MapTypeId.ROADMAP
+	      mapTypeId: google.maps.MapTypeId.SATELLITE
 	    }
 
 	    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions)
@@ -81,51 +108,68 @@
 
         // Add markers for each CCTV location
         for (var i = 0; i < locations.length; i++) {  
-            // var position = { lat: cctvData[i][1], lng: cctvData[i][2] };
+		    (function(i) {
+		        var marker = new google.maps.Marker({
+		            position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+		            map: map,
+		            title: locations[i][2],
+		        });
 
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i][0], locations[i][1]),
-                map: map,
-                title: locations[i][2],
-            });
+		        marker.addListener('click', function() {
+		            var videoId = 'video_' + i;
+		            var videoIdB = 'videoB_' + i;
+		            var currentHls = 'videoC_' + i;
 
-            marker.addListener('click', function() {
-                // Create a unique ID for each video element
-                var videoId = 'video_' + i;
-                var videoIdB = 'videoB_' + i;
-                var currentHls = 'videoC_' + i;
+		            var contentString = `
+		                <div style="width: 100%; height: 200px; border: 5px solid #4e73df;">
+		                    <video id="${videoId}" autoplay="true" controls="controls" muted style="width: 100%; height: 100%;" type='application/x-mpegURL'></video>
+		                </div>
+		            `;
 
-                var contentString = `
-                    <div style="width: 300px; height: 200px;">
-                        <video id="${videoId}" autoplay="true" controls="controls" muted style="width: 100%; height: 100%;" type='application/x-mpegURL'></video>
-                    </div>
-                `;
+		            infoWindow.setContent(contentString);
+		            infoWindow.open(map, marker);
 
-                infoWindow.setContent(contentString);
-                infoWindow.open(map, marker);
+		            google.maps.event.addListenerOnce(infoWindow, 'domready', function() {
+		            	var closeButton = document.querySelector('.gm-ui-hover-effect');
+				        if (closeButton) {
+				            closeButton.style.transform = 'scale(0.7)'; // Mengurangi ukuran tombol "X"
+				            // closeButton.style.width = '20px'; // Sesuaikan lebar tombol "X"
+				            // closeButton.style.height = '20px'; // Sesuaikan tinggi tombol "X"
+				            // closeButton.style.top = '20px'; // Posisikan tepat di atas
+				            // closeButton.style.right = '0px'; // Posisikan tepat di kanan
+				            // closeButton.style.position = 'absolute'; // Pastikan posisi absolut
+				            // closeButton.style.padding = '5px'; // Tambahkan padding untuk jarak yang lebih baik
+				        }
 
-                google.maps.event.addListenerOnce(infoWindow, 'domready', function() {
+		                if (Hls.isSupported()) {
+		                    var videoElement = document.getElementById(videoId);
+		                    currentHls = new Hls();
+		                    currentHls.attachMedia(videoElement);
+		                    currentHls.on(Hls.Events.MEDIA_ATTACHED, function () {
+		                        currentHls.loadSource(locations[i][3]);
+		                    });
+		                } else {
+		                    console.error('HLS.js is not supported in this browser.');
+		                }
+		            });
 
-                    // Create a new HLS instance
-                    if (Hls.isSupported()) {
-                        var videoIdB = document.getElementById(videoId);
-                        currentHls = new Hls();
-                        currentHls.attachMedia(videoIdB);
-                        currentHls.on(Hls.Events.MEDIA_ATTACHED, function () {
-                            currentHls.loadSource(locations[i][3]);
-                            currentHls.on(Hls.Events.MANIFEST_PARSED, function () {
-                                // Handle parsed manifest if needed
-                            });
-                        });
-                    } else {
-                        console.error('HLS.js is not supported in this browser.');
-                    }
-                });
 
-            });
+			        // Center the map on the CCTV location
+			        map.panTo(position);
+			        map.setZoom(18);
 
-            markers.push(marker);
 
+				    // Menghapus instance HLS saat infoWindow ditutup
+				    google.maps.event.addListener(infoWindow, 'closeclick', function() {
+				        if (currentHls) {
+				            currentHls.destroy();
+				            currentHls = null;
+				        }
+				    });
+		        });
+
+		        markers.push(marker);
+		    })(i);
         };
 	  }
 
@@ -145,39 +189,179 @@
 	    <!-- Main Content -->
 	    <div id="content">
 
-        	<img src="<?= base_url('assets/img/profile_perusahaan/') . $profile['logo']; ?>" class="d-none d-sm-inline-block col-sm-1" width="50vh" style="float: left; position: absolute; z-index: 99; margin-left: 2vh; margin-top: 4vh; ">
+	    	<style type="text/css">
+	    		/*<!-- tampilan hp -->*/
+	    		@media (max-width: 450px) {
+	    			.pencarian {
+	    				position: absolute; 
+	    				top: 1vh; 
+	    				left: 23vh; 
+	    				transform: translateX(-50%); 
+	    				z-index: 10; 
+	    				width: 70%; 
+	    				background-color: white; 
+	    				padding: 2vh; 
+	    				border-radius: 8px; 
+	    				box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	    			}
 
+	    			.pencarian .nm-perusahaan {
+	    				font-size: 3vh;
+	    			}
+
+	    			.pencarian .ket-perusahaan {
+	    				font-size: 2vh;
+	    				margin: 0;
+	    			}
+
+	    			.pencarian .jml-cctv {
+	    				font-size: 2vh;
+	    			}
+
+	    			.pencarian #cctv-list .list-group-item {
+	    				font-size: 2vh;    				
+	    			}
+
+	    			.pencarian #cctv-list .no-results {
+	    				font-size: 2vh;    				
+	    			}
+
+	    			footer {
+	    				height: 100px; 
+	    			}
+
+	    			footer .nm-perusahaan-footer {
+	    				position: relative;
+	    				line-height: 90px;
+	    				color: white;
+	    			}
+	    		}
+
+	    		/*<!-- tampilan hp -->*/
+	    		@media (min-width: 450px) and (max-width: 768px) {
+	    			.pencarian {
+	    				position: absolute; 
+	    				top: 2vh; 
+	    				left: 18vh; 
+	    				transform: translateX(-50%); 
+	    				z-index: 10; 
+	    				width: 35%; 
+	    				background-color: white; 
+	    				padding: 2vh; 
+	    				border-radius: 8px; 
+	    				box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	    			}
+
+	    			.pencarian .nm-perusahaan {
+	    				font-size: 3vh;
+	    			}
+
+	    			.pencarian .ket-perusahaan {
+	    				font-size: 2vh;
+	    				margin: 0;
+	    			}
+
+	    			.pencarian .jml-cctv {
+	    				font-size: 2vh;
+	    			}
+
+	    			.pencarian #cctv-list .list-group-item {
+	    				font-size: 2vh;    				
+	    			}
+
+	    			.pencarian #cctv-list .no-results {
+	    				font-size: 2vh;    				
+	    			}
+
+	    			footer {
+	    				height: 13vh; z-index: 100;
+	    			}
+
+	    			footer .nm-perusahaan-footer {
+	    				position: relative;
+	    				line-height: 13vh;
+	    				color: white;
+	    			}
+	    		}
+
+
+	    		/*<!-- tampilan laptop / komputer -->*/
+	    		@media (min-width: 768px) {
+	    			.pencarian {
+	    				position: absolute; 
+	    				top: 8vh; 
+	    				left: 30vh; 
+	    				transform: translateX(-50%); 
+	    				z-index: 10; 
+	    				width: 25%; 
+	    				background-color: white; 
+	    				padding: 2vh; 
+	    				border-radius: 8px; 
+	    				box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	    			}
+
+	    			footer {
+	    				height: 13vh; z-index: 100;
+	    			}
+
+	    			footer .nm-perusahaan-footer {
+	    				position: relative;
+	    				/*line-height: 90px;*/
+	    				color: white;
+	    			}
+
+	    		}
+
+
+	    	</style>
 
 	        <!-- Search Box and List Container -->
-	        <div style="position: absolute; top: 20vh; left: 30vh; transform: translateX(-50%); z-index: 10; width: 25%; background-color: white; padding: 2vh; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
-	            <!-- Search Box and Button -->
-	            <!-- CCTV Online Title -->
-	            <h5 class="font-weight-bold text-primary text-center mb-3">10 CCTV Online</h5>
-	            <div class="input-group">
-	                <input type="text" class="form-control" placeholder="Cari CCTV..." id="search-box" style="font-size: 2vh; padding: 1vh;">
-	                <div class="input-group-append">
-	                    <button class="btn btn-primary" type="button" id="search-button" style="font-size: 2vh;">Cari</button>
-	                </div>
-	            </div>
-                <small class="text-primary">*berdasarkan nama cctv</small>
-	            
-	            <!-- CCTV List -->
-	            <div style="max-height: 35vh; overflow-y: auto;">
-		            <ul class="mt-3 list-group">
-		            	<?php foreach($dt_allCCTV as $row) { ?>
-			            	<a href="#" class="cctv-link" style="text-decoration: none;"
-			            	data-latitude="<?= $row['latitude']; ?>"
-			               	data-longitude="<?= $row['longitude']; ?>"
-			               	data-name="<?= $row['nm_cctv']; ?>"
-			               	data-url="<?= $dt_setting['domain'].$row['url_directory'] ?>"
-			               	>
+			<div class="pencarian">
+
+			    <div style="display: flex; flex-direction: column; align-items: left;">
+			        <!-- Logo -->
+
+			        <div style="display: flex; align-items: center; margin-bottom: 2vh;">
+    <!-- Logo -->
+					    <img src="<?= base_url('assets/img/profile_perusahaan/') . $profile['logo']; ?>" style="width: auto; height: 10vh; margin-right: 2vh;">
+
+					    <!-- Text Container -->
+					    <div style="display: flex; flex-direction: column;">
+					        <h5 class="font-weight-bold text-primary text-left nm-perusahaan">SARANGAN VISION</h5>
+					        <p class="text-left ket-perusahaan">Layanan Internet dan TV Digital</p>
+					    </div>
+					</div>
+			        <!-- Title -->
+			        <h5 class="font-weight-bold text-primary text-left jml-cctv">(10 CCTV Online)</h5>
+			    </div>
+
+			    <!-- Search Box and Button -->
+			    <!-- <h5 class="font-weight-bold text-primary text-center mb-3" style="margin-top: 5vh;">10 CCTV Online</h5> -->
+			    <div class="input-group">
+			        <input type="text" class="form-control" placeholder="Pencarian CCTV..." id="search-box" style="font-size: 2vh; padding: 1vh;">
+			        <!-- div class="input-group-append">
+			            <button class="btn btn-primary" type="button" id="search-button" style="font-size: 2vh;">Cari</button>
+			        </div> -->
+			    </div>
+			    <small class="text-primary">*berdasarkan nama cctv</small>
+
+			    <!-- CCTV List -->
+			    <div style="max-height: 35vh; overflow-y: auto;">
+			        <ul id="cctv-list" class="mt-2 list-group">
+			            <?php foreach($dt_allCCTV as $row) { ?>
+			                <a href="#" class="cctv-link" style="text-decoration: none;"
+			                   data-latitude="<?= $row['latitude']; ?>"
+			                   data-longitude="<?= $row['longitude']; ?>"
+			                   data-name="<?= $row['nm_cctv']; ?>"
+			                   data-url="<?= $dt_setting['domain'].$row['url_directory'] ?>">
 			                    <li class="list-group-item"><?= $row['nm_cctv']; ?></li>
-		                    </a>
-		                <?php } ?>
-		                <!-- Add more list items as needed -->
-		            </ul>
-		        </div>
-	        </div>
+			                </a>
+			            <?php } ?>
+			            <li class="no-results">CCTV tidak ditemukan</li>
+			        </ul>
+			    </div>
+
+			</div>
 
 	        <div style="height: 82vh; " class="row">
 	        	<div id="map_canvas" style="width: 100%;"></div>
@@ -195,15 +379,15 @@
 
 
 	        <!-- Footer -->
-	        <footer class="row bg-primary py-3 text-white pt-4" style="height: 13vh; z-index: 100;">
+	        <footer class="row bg-primary py-6 text-white pt-4">
 	            <div class="col-sm-3 text-center">
-	                <span class="font-weight-bold text-center mb-3" style="font-size: 16px;">PT. SARANGAN SUKSES PERKASA</span>
+	                <span class="font-weight-bold text-center nm-perusahaan-footer">PT. SARANGAN SUKSES PERKASA</span>
 	            </div>
-	            <div class="col-sm-3 text-center" class="d-none d-sm-inline-block">
-	                <span class="font-weight-bold text-center mb-3" style="font-size: 16px;">Support by :</span>
+	            <div class="col-sm-3 text-center d-none d-sm-inline-block">
+	                <span class="font-weight-bold text-center mb-3 d-none d-sm-inline-block" style="font-size: 16px;">Support by :</span>
 	            </div>
-	            <div class="col-sm-3 text-center" class="d-none d-sm-inline-block">
-	                <span class="font-weight-bold text-center mb-3" style="font-size: 16px;">Sosial Media</span>
+	            <div class="col-sm-3 text-center d-none d-sm-inline-block">
+	                <span class="font-weight-bold text-center mb-3 " style="font-size: 16px;">Sosial Media</span>
 	                <div class="mt-2">
 			            
 			            <a href="#" class="text-white mx-2">
@@ -246,7 +430,29 @@
 
 	<!-- Skrip JavaScript -->
 	<script>
+
+		document.getElementById('search-box').addEventListener('input', function() {
+		    const searchBox = document.getElementById('search-box');
+            const filter = searchBox.value.toLowerCase();
+            const listItems = document.querySelectorAll('#cctv-list .list-group-item');
+            let found = false;
+
+            listItems.forEach(function(item) {
+                if (item.textContent.toLowerCase().indexOf(filter) > -1) {
+                    item.style.display = '';
+                    found = true;
+                } else if (!item.classList.contains('no-results')) {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Tampilkan atau sembunyikan pesan tidak ditemukan
+            document.querySelector('.no-results').style.display = found ? 'none' : 'block';
+		});
+
 		$(document).ready(function(){
+
+
 			var markers = [];
 			var currentMarker = null; 
 
@@ -268,7 +474,7 @@
 
 		        // Info window content with video player
 		        var contentString = `
-		            <div style="width: 300px; height: 200px;">
+	                <div style="width: 100%; height: 200px; border: 5px solid #4e73df;">
 		                <video id="video" autoplay="true" controls="controls" muted style="width: 100%; height: 100%;" type='application/x-mpegURL'></video>
 		            </div>
 		        `;
@@ -279,6 +485,17 @@
 
 		        // After the info window is opened, initialize HLS.js
 		        google.maps.event.addListenerOnce(infoWindow, 'domready', function() {
+	            	var closeButton = document.querySelector('.gm-ui-hover-effect');
+			        if (closeButton) {
+			            closeButton.style.transform = 'scale(0.7)'; // Mengurangi ukuran tombol "X"
+			            // closeButton.style.width = '20px'; // Sesuaikan lebar tombol "X"
+			            // closeButton.style.height = '20px'; // Sesuaikan tinggi tombol "X"
+			            // closeButton.style.top = '20px'; // Posisikan tepat di atas
+			            // closeButton.style.right = '0px'; // Posisikan tepat di kanan
+			            // closeButton.style.position = 'absolute'; // Pastikan posisi absolut
+			            // closeButton.style.padding = '5px'; // Tambahkan padding untuk jarak yang lebih baik
+			        }
+
 		            if (Hls.isSupported()) {
 		                var video = document.getElementById('video');
 		                var hls = new Hls();
@@ -298,6 +515,15 @@
 		        // Center the map on the CCTV location
 		        map.panTo(position);
 		        map.setZoom(18);
+
+		            
+			    // Menghapus instance HLS saat infoWindow ditutup
+			    google.maps.event.addListener(infoWindow, 'closeclick', function() {
+			        if (currentHls) {
+			            currentHls.destroy();
+			            currentHls = null;
+			        }
+			    });
 		    }
 
 		    // Event listener for all links with class 'cctv-link'
