@@ -190,15 +190,41 @@
 	    <div id="content">
 
 	    	<style type="text/css">
+		    	/* Style umum untuk semua perangkat */
+				.footer {
+				    background-color: #007bff; /* Warna biru */
+				    color: #ffffff; /* Warna putih */
+				    padding: 1rem;
+				    text-align: center;
+				    position: relative; /* Pastikan footer tetap berada di posisi relatifnya */
+				    overflow: hidden; /* Mencegah konten keluar dari batas footer */
+				}
+
+				.nm-perusahaan-footer {
+				    display: inline-block;
+				    margin: auto;
+				}
+
+				.tgl-hari-ini {
+				    font-size: 3vh;
+				    line-height: 6vh;
+				}
+
+				.text-berjalan {
+				    font-size: 3vh;
+				    line-height: 6vh;
+				    overflow: hidden;
+				}
+
 	    		/*<!-- tampilan hp -->*/
 	    		@media (max-width: 450px) {
 	    			.pencarian {
 	    				position: absolute; 
-	    				top: 1vh; 
-	    				left: 23vh; 
+	    				top: 3vh; 
+	    				left: 20vh; 
 	    				transform: translateX(-50%); 
 	    				z-index: 10; 
-	    				width: 70%; 
+	    				width: 35vh; 
 	    				background-color: white; 
 	    				padding: 2vh; 
 	    				border-radius: 8px; 
@@ -206,11 +232,11 @@
 	    			}
 
 	    			.pencarian .nm-perusahaan {
-	    				font-size: 3vh;
+	    				font-size: 2vh;
 	    			}
 
 	    			.pencarian .ket-perusahaan {
-	    				font-size: 2vh;
+	    				font-size: 1.5vh;
 	    				margin: 0;
 	    			}
 
@@ -224,16 +250,6 @@
 
 	    			.pencarian #cctv-list .no-results {
 	    				font-size: 2vh;    				
-	    			}
-
-	    			footer {
-	    				height: 100px; 
-	    			}
-
-	    			footer .nm-perusahaan-footer {
-	    				position: relative;
-	    				line-height: 90px;
-	    				color: white;
 	    			}
 
 					#search-icon {
@@ -268,17 +284,34 @@
 					.close-btn:hover {
 					    color: #f00; /* Optional: change color on hover */
 					}
+
+
+
+				    /* Gaya untuk perangkat mobile */
+				    .nm-perusahaan-footer {
+				        font-size: 14px;
+				    }
+
+				    .fab {
+				        font-size: 2vh;
+				    }
+
+				    .tgl-hari-ini, .text-berjalan {
+				        font-size: 2.5vh; /* Mengurangi ukuran font untuk layar kecil */
+				        line-height: 4vh; /* Menyesuaikan line-height */
+				        margin-top: 0.5rem;
+				    }
 	    		}
 
 	    		/*<!-- tampilan hp -->*/
 	    		@media (min-width: 450px) and (max-width: 768px) {
 	    			.pencarian {
 	    				position: absolute; 
-	    				top: 2vh; 
-	    				left: 18vh; 
+	    				top: 5vh; 
+	    				left: 20vh; 
 	    				transform: translateX(-50%); 
 	    				z-index: 10; 
-	    				width: 35%; 
+	    				width: 35vh; 
 	    				background-color: white; 
 	    				padding: 2vh; 
 	    				border-radius: 8px; 
@@ -286,11 +319,11 @@
 	    			}
 
 	    			.pencarian .nm-perusahaan {
-	    				font-size: 3vh;
+	    				font-size: 2.5vh;
 	    			}
 
 	    			.pencarian .ket-perusahaan {
-	    				font-size: 2vh;
+	    				font-size: 1.7vh;
 	    				margin: 0;
 	    			}
 
@@ -304,16 +337,6 @@
 
 	    			.pencarian #cctv-list .no-results {
 	    				font-size: 2vh;    				
-	    			}
-
-	    			footer {
-	    				height: 13vh; z-index: 100;
-	    			}
-
-	    			footer .nm-perusahaan-footer {
-	    				position: relative;
-	    				line-height: 13vh;
-	    				color: white;
 	    			}
 
 					#search-icon {
@@ -348,6 +371,21 @@
 					.close-btn:hover {
 					    color: #f00; /* Optional: change color on hover */
 					}
+
+				    /* Gaya untuk tablet kecil dan smartphone lebih besar */
+				    .nm-perusahaan-footer {
+				        font-size: 16px;
+				    }
+
+				    .fab {
+				        font-size: 2.5vh;
+				    }
+
+				    .tgl-hari-ini, .text-berjalan {
+				        font-size: 3vh; /* Mengurangi ukuran font untuk layar kecil */
+				        line-height: 5vh; /* Menyesuaikan line-height */
+				        margin-top: 0.75rem;
+				    }
 	    		}
 
 
@@ -356,26 +394,15 @@
 	    			.pencarian {
 	    				position: absolute; 
 	    				top: 8vh; 
-	    				left: 30vh; 
+	    				left: 25vh; 
 	    				transform: translateX(-50%); 
 	    				z-index: 10; 
-	    				width: 25%; 
+	    				width: 40vh; 
 	    				background-color: white; 
 	    				padding: 2vh; 
 	    				border-radius: 8px; 
 	    				box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 	    			}
-
-	    			footer {
-	    				height: 13vh; z-index: 100;
-	    			}
-
-	    			footer .nm-perusahaan-footer {
-	    				position: relative;
-	    				/*line-height: 90px;*/
-	    				color: white;
-	    			}
-
 
 					#search-icon {
 					    position: absolute;
@@ -409,6 +436,21 @@
 					.close-btn:hover {
 					    color: #f00; /* Optional: change color on hover */
 					}
+
+				    /* Gaya untuk desktop dan tablet besar */
+				    .nm-perusahaan-footer {
+				        font-size: 18px;
+				    }
+
+				    .fab {
+				        font-size: 3vh;
+				    }
+
+				    .tgl-hari-ini, .text-berjalan {
+				        font-size: 3vh; /* Mengurangi ukuran font untuk layar kecil */
+				        line-height: 6vh; /* Menyesuaikan line-height */
+				        margin-top: 1rem;
+				    }
 
 	    		}
 
@@ -420,7 +462,6 @@
 			    <i class="fas fa-search" style="font-size: 2rem; line-height: 60px; margin-left: 15px;"></i>
 			</div>
 
-
 	        <!-- Search Box and List Container -->
 			<div class="pencarian">
 				<button class="close-btn" aria-label="Close">&times;</button>
@@ -429,7 +470,7 @@
 			        <!-- Logo -->
 
 			        <div style="display: flex; align-items: center; margin-bottom: 2vh;">
-    <!-- Logo -->
+					    <!-- Logo -->
 					    <img src="<?= base_url('assets/img/profile_perusahaan/') . $profile['logo']; ?>" style="width: auto; height: 10vh; margin-right: 2vh;">
 
 					    <!-- Text Container -->
@@ -467,7 +508,6 @@
 			            <li class="no-results">CCTV tidak ditemukan</li>
 			        </ul>
 			    </div>
-
 			</div>
 
 	        <div style="height: 82vh; " class="row">
@@ -475,37 +515,44 @@
 	        </div>
 
 	        
-	        <div style="height: 5vh; z-index: 100;" class="row shadow bg-white justify-content-center">
-	        	<div class="col-sm-2 bg-secondary text-center">
-	        		<span class="h5 mb-0 font-weight-bold text-white mt-2" style="font-size: 3vh; line-height: 6vh;"><?= $now; ?></span>
-	        	</div>
-	        	<div class="col-sm-10 bg-white text-center">
-	        		<marquee class="h5 mb-0 font-weight-bold text-gray-800 mt-2"style="font-size: 3vh; line-height: 4vh;">CCTV ONLINE MAGETAN PT SARANGAN SUKSES PERKASA</marquee>
-	        	</div>
-	        </div>
-
+	        <div style="height: auto; position: relative;" class="row shadow bg-white justify-content-center">
+	        	 <div class="container-fluid">
+			        <div class="row">
+					    <div class="col-sm-2 bg-secondary text-center tanggal">
+					        <span class="h5 mb-0 font-weight-bold text-white mt-2 tgl-hari-ini" style="font-size: 3vh; line-height: 6vh;"><?= $now; ?></span>
+					    </div>
+					    <div class="col-sm-10 bg-white text-center berita">
+					        <marquee class="h5 mb-0 font-weight-bold text-gray-800 mt-2 text-berjalan" style="font-size: 3vh; line-height: 6vh;">CCTV ONLINE MAGETAN PT SARANGAN SUKSES PERKASA</marquee>
+					    </div>
+				    </div>
+			    </div>
+			</div>
 
 	        <!-- Footer -->
-	        <footer class="row bg-primary py-6 text-white pt-4">
-	            <div class="col-sm-3 text-center">
-	                <span class="font-weight-bold text-center nm-perusahaan-footer">PT. SARANGAN SUKSES PERKASA</span>
-	            </div>
-	            <div class="col-sm-3 text-center d-none d-sm-inline-block">
-	                <span class="font-weight-bold text-center mb-3 d-none d-sm-inline-block" style="font-size: 16px;">Support by :</span>
-	            </div>
-	            <div class="col-sm-3 text-center d-none d-sm-inline-block">
-	                <span class="font-weight-bold text-center mb-3 " style="font-size: 16px;">Sosial Media</span>
-	                <div class="mt-2">
-			            
-			            <a href="#" class="text-white mx-2">
-			                <i class="fab fa-instagram" style="font-size: 2.5vh;"></i>
-			            </a>
-			            <a href="#" class="text-white mx-2">
-			                <i class="fab fa-facebook" style="font-size: 2.5vh;"></i>
-			            </a>
+			<footer class="footer bg-primary py-6 text-white pt-4">
+			    <div class="container-fluid">
+			        <div class="row">
+			            <div class="col-sm-4 text-center">
+			                <span class="font-weight-bold nm-perusahaan-footer">PT. SARANGAN SUKSES PERKASA</span>
+			            </div>
+			            <div class="col-sm-4 text-center">
+			                <span class="font-weight-bold mb-3" style="font-size: 16px;">Support by :</span>
+			            </div>
+			            <div class="col-sm-4 text-center">
+			                <span class="font-weight-bold mb-3" style="font-size: 16px;">Sosial Media</span>
+			                <div class="mt-2">
+			                    <a href="#" class="text-white mx-2">
+			                        <i class="fab fa-instagram" style="font-size: 2.5vh;"></i>
+			                    </a>
+			                    <a href="#" class="text-white mx-2">
+			                        <i class="fab fa-facebook" style="font-size: 2.5vh;"></i>
+			                    </a>
+			                </div>
+			            </div>
 			        </div>
-	            </div>
-	        </footer>
+			    </div>
+			</footer>
+
 
 		</div>
 		<!-- End of Main Content -->
