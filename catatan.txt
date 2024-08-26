@@ -1,7 +1,7 @@
 
 Subdomain : channel.saranganvision.com
 
-Database :
-Nama database :
+User : 	kurniate_accounting
+Nama database : kurniate_cctv_srg
 Paswrod :
 
