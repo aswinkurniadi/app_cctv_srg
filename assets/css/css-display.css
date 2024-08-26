@@ -1,0 +1,296 @@
+.bg-login-image {
+    background-image: url("<?= base_url('assets/img/ktp-dark_.png'); ?>");
+}
+
+body {
+	overflow: hidden;
+}
+
+/* Gaya dasar untuk item daftar */
+.list-group-item {
+    transition: background-color 0.3s, color 0.3s; /* Transisi halus untuk perubahan warna */
+    cursor: pointer;
+}
+
+/* Gaya saat kursor berada di atas item daftar */
+.list-group-item:hover {
+    background-color: #4e73df; /* Warna latar belakang biru (primary) */
+    color: #ffffff; /* Warna teks putih */
+}
+
+/* Gaya untuk link di dalam item daftar agar tetap terlihat seperti item daftar */
+.list-group-item a {
+    color: inherit; /* Menggunakan warna teks item daftar */
+    text-decoration: none; /* Menghapus garis bawah dari link */
+}
+
+.no-results {
+    display: none; /* Sembunyikan pesan tidak ditemukan secara default */
+    color: red;
+    font-size: 1em;
+    text-align: center;
+    padding: 10px;
+}
+/* Style umum untuk semua perangkat */
+.footer {
+    background-color: #007bff; /* Warna biru */
+    color: #ffffff; /* Warna putih */
+    padding: 1rem;
+    text-align: center;
+    position: relative; /* Pastikan footer tetap berada di posisi relatifnya */
+    overflow: hidden; /* Mencegah konten keluar dari batas footer */
+}
+
+.nm-perusahaan-footer {
+    display: inline-block;
+    margin: auto;
+}
+
+.tgl-hari-ini {
+    font-size: 3vh;
+    line-height: 6vh;
+}
+
+.text-berjalan {
+    font-size: 3vh;
+    line-height: 6vh;
+    overflow: hidden;
+}
+
+/*<!-- tampilan hp -->*/
+@media (max-width: 450px) {
+	.pencarian {
+		position: absolute; 
+		top: 3vh; 
+		left: 20vh; 
+		transform: translateX(-50%); 
+		z-index: 10; 
+		width: 35vh; 
+		background-color: white; 
+		padding: 2vh; 
+		border-radius: 8px; 
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.pencarian .nm-perusahaan {
+		font-size: 2vh;
+	}
+
+	.pencarian .ket-perusahaan {
+		font-size: 1.5vh;
+		margin: 0;
+	}
+
+	.pencarian .jml-cctv {
+		font-size: 2vh;
+	}
+
+	.pencarian #cctv-list .list-group-item {
+		font-size: 2vh;    				
+	}
+
+	.pencarian #cctv-list .no-results {
+		font-size: 2vh;    				
+	}
+
+	#search-icon {
+	    position: absolute;
+	    top: 8vh; /* Jarak dari atas */
+	    left: 20px; /* Jarak dari kiri */
+	    background-color: #4e73df; /* Warna biru */
+	    color: white; /* Warna ikon */
+	    border-radius: 50%; /* Membuat lingkaran */
+	    width: 60px; /* Lebar */
+	    height: 60px; /* Tinggi */
+	    display: none;
+	    align-items: center;
+	    justify-content: center;
+	    cursor: pointer;
+	    z-index: 1000; /* Pastikan di atas elemen lain */
+	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+	}
+
+	.close-btn {
+	    position: absolute;
+	    top: 10px; /* Adjust as needed */
+	    right: 10px; /* Adjust as needed */
+	    background: none;
+	    border: none;
+	    font-size: 2rem;
+	    color: #000; /* Adjust color as needed */
+	    cursor: pointer;
+	    z-index: 10; /* Ensure it's on top of other content */
+	}
+
+	.close-btn:hover {
+	    color: #f00; /* Optional: change color on hover */
+	}
+
+
+
+    /* Gaya untuk perangkat mobile */
+    .nm-perusahaan-footer {
+        font-size: 14px;
+    }
+
+    .fab {
+        font-size: 2vh;
+    }
+
+    .tgl-hari-ini, .text-berjalan {
+        font-size: 2.5vh; /* Mengurangi ukuran font untuk layar kecil */
+        line-height: 4vh; /* Menyesuaikan line-height */
+        margin-top: 0.5rem;
+    }
+}
+
+/*<!-- tampilan hp -->*/
+@media (min-width: 450px) and (max-width: 768px) {
+	.pencarian {
+		position: absolute; 
+		top: 5vh; 
+		left: 20vh; 
+		transform: translateX(-50%); 
+		z-index: 10; 
+		width: 35vh; 
+		background-color: white; 
+		padding: 2vh; 
+		border-radius: 8px; 
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.pencarian .nm-perusahaan {
+		font-size: 2.5vh;
+	}
+
+	.pencarian .ket-perusahaan {
+		font-size: 1.7vh;
+		margin: 0;
+	}
+
+	.pencarian .jml-cctv {
+		font-size: 2vh;
+	}
+
+	.pencarian #cctv-list .list-group-item {
+		font-size: 2vh;    				
+	}
+
+	.pencarian #cctv-list .no-results {
+		font-size: 2vh;    				
+	}
+
+	#search-icon {
+	    position: absolute;
+	    top: 8vh; /* Jarak dari atas */
+	    left: 20px; /* Jarak dari kiri */
+	    background-color: #4e73df; /* Warna biru */
+	    color: white; /* Warna ikon */
+	    border-radius: 50%; /* Membuat lingkaran */
+	    width: 60px; /* Lebar */
+	    height: 60px; /* Tinggi */
+	    display: none;
+	    align-items: center;
+	    justify-content: center;
+	    cursor: pointer;
+	    z-index: 1000; /* Pastikan di atas elemen lain */
+	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+	}
+
+	.close-btn {
+	    position: absolute;
+	    top: 10px; /* Adjust as needed */
+	    right: 10px; /* Adjust as needed */
+	    background: none;
+	    border: none;
+	    font-size: 2rem;
+	    color: #000; /* Adjust color as needed */
+	    cursor: pointer;
+	    z-index: 10; /* Ensure it's on top of other content */
+	}
+
+	.close-btn:hover {
+	    color: #f00; /* Optional: change color on hover */
+	}
+
+    /* Gaya untuk tablet kecil dan smartphone lebih besar */
+    .nm-perusahaan-footer {
+        font-size: 16px;
+    }
+
+    .fab {
+        font-size: 2.5vh;
+    }
+
+    .tgl-hari-ini, .text-berjalan {
+        font-size: 3vh; /* Mengurangi ukuran font untuk layar kecil */
+        line-height: 5vh; /* Menyesuaikan line-height */
+        margin-top: 0.75rem;
+    }
+}
+
+
+/*<!-- tampilan laptop / komputer -->*/
+@media (min-width: 768px) {
+	.pencarian {
+		position: absolute; 
+		top: 8vh; 
+		left: 25vh; 
+		transform: translateX(-50%); 
+		z-index: 10; 
+		width: 40vh; 
+		background-color: white; 
+		padding: 2vh; 
+		border-radius: 8px; 
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	#search-icon {
+	    position: absolute;
+	    top: 8vh; /* Jarak dari atas */
+	    left: 20px; /* Jarak dari kiri */
+	    background-color: #4e73df; /* Warna biru */
+	    color: white; /* Warna ikon */
+	    border-radius: 50%; /* Membuat lingkaran */
+	    width: 60px; /* Lebar */
+	    height: 60px; /* Tinggi */
+	    display: none;
+	    align-items: center;
+	    justify-content: center;
+	    cursor: pointer;
+	    z-index: 1000; /* Pastikan di atas elemen lain */
+	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek bayangan */
+	}
+
+	.close-btn {
+	    position: absolute;
+	    top: 10px; /* Adjust as needed */
+	    right: 10px; /* Adjust as needed */
+	    background: none;
+	    border: none;
+	    font-size: 2rem;
+	    color: #000; /* Adjust color as needed */
+	    cursor: pointer;
+	    z-index: 10; /* Ensure it's on top of other content */
+	}
+
+	.close-btn:hover {
+	    color: #f00; /* Optional: change color on hover */
+	}
+
+    /* Gaya untuk desktop dan tablet besar */
+    .nm-perusahaan-footer {
+        font-size: 18px;
+    }
+
+    .fab {
+        font-size: 3vh;
+    }
+
+    .tgl-hari-ini, .text-berjalan {
+        font-size: 3vh; /* Mengurangi ukuran font untuk layar kecil */
+        line-height: 6vh; /* Menyesuaikan line-height */
+        margin-top: 1rem;
+    }
+
+}

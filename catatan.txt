@@ -1,7 +1,7 @@
 
-Subdomain : channel.saranganvision.com
+Subdomain : cctv.saranganvision.com
 
-Database :
-Nama database :
-Paswrod :
+Database : u936013138_cctv
+Nama database : u936013138_cctv
+Paswrod : 9[Hv#6ogAd&&
 
